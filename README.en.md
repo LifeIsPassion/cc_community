@@ -1,7 +1,7 @@
-# community
+# cc_community
 
 #### Description
-仿牛客论坛项目
+
 
 #### Software Architecture
 Software architecture description
