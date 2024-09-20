@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyt.community.dao.CommentMapper">
+    <sql id="selectFileds">
+        id, user_id, entity_type, entity_id, target_id, content, status, create_time
+    </sql>
+
+    <sql id="insertFileds">
+        user_id, entity_type, entity_id, target_id, content, status, create_time
+    </sql>
+
+    <select id="selectCommentByEntityId" resultType="Comment">
+        select <include refid="selectFileds"></include>
+        from comment
+        where entity_type = #{entityType} and entity_id = #{entityId} and status = 0
+        order by create_time desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="selectCountByEntityId" resultType="int">
+        select count(id)
+        from comment
+        where entity_type = #{entityType} and entity_id = #{entityId} and status = 0
+    </select>
+
+    <insert id="insertComment" parameterType="comment">
+        insert into comment(<include refid="insertFileds"></include>)
+        values (#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime});
+    </insert>
+
+    <select id="selectCommentById" resultType="Comment">
+        select *
+        from comment
+        where id=#{id};
+    </select>
+</mapper>
